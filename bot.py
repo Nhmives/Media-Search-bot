@@ -10,7 +10,24 @@ from pyrogram.raw.all import layer
 from utils import Media
 from info import SESSION, API_ID, API_HASH, BOT_TOKEN
 
+from flask import Flask
+from threading import Thread
+from pyrogram import Client
 
+app = Client("my_bot")
+server = Flask(__name__)
+
+@server.route("/")
+def home():
+    return "Bot is running!"
+
+def run_server():
+    server.run(host="0.0.0.0", port=8000)
+
+if __name__ == "__main__":
+    Thread(target=run_server).start()
+    app.run()
+    
 class Bot(Client):
 
     def __init__(self):
